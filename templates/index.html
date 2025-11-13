@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Algorithm Visualizer</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+  <link rel="manifest" href="{{ url_for('static', filename='manifest.json') }}">
+<meta name="theme-color" content="#4f46e5">
+
+</head>
+<body>
+  <header>
+    <h1>Algorithm Visualizer</h1>
+  </header>
+
+  <main class="controls-area">
+    <div class="controls-row">
+      <button id="generateBtn" class="btn primary" title="Generate random array/graph">
+        <!-- simple SVG icon -->
+        <svg viewBox="0 0 24 24" class="icon"><path d="M12 2v4M12 18v4M4 12h4M16 12h4M5 5l3 3M16 16l3 3M5 19l3-3M16 8l3-3" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg>
+        Generate
+      </button>
+
+      <button id="startBtn" class="btn accent" title="Start visualization">
+        <svg viewBox="0 0 24 24" class="icon"><path d="M5 3v18l15-9L5 3z" fill="currentColor"/></svg>
+        Start
+      </button>
+
+      <select id="algorithmSelect" class="selector" title="Choose algorithm">
+        <option value="bubble">Bubble Sort</option>
+        <option value="quick">Quick Sort</option>
+        <option value="merge">Merge Sort</option>
+        <option value="bfs">BFS (Graph)</option>
+        <option value="dfs">DFS (Graph)</option>
+      </select>
+
+      <label class="small">
+        Size:
+        <input id="arraySize" type="number" min="5" max="30" value="12">
+      </label>
+
+      <label class="small">
+        Speed:
+        <input id="speedSlider" type="range" min="0.2" max="2" step="0.1" value="1">
+      </label>
+
+      <span id="speedLabel" class="speed-label">1.0x</span>
+    </div>
+
+    <div class="controls-row">
+      <input id="username" type="text" placeholder="username (save/load)" />
+      <button id="saveBtn" class="btn" title="Save current array">Save</button>
+      <button id="loadBtn" class="btn" title="Load saved array">Load</button>
+
+      <button id="toggleLayout" class="btn" title="Toggle layout">Toggle Layout</button>
+    </div>
+
+    <div id="explainBox" class="explain">Ready — choose algorithm and press Start.</div>
+  </main>
+
+  <section class="canvas-area">
+    <!-- Two canvases: bars & graph share same canvas element for simplicity -->
+    <canvas id="graphCanvas" width="900" height="420"></canvas>
+  </section>
+
+  <footer>
+    <small>Works on desktop & mobile — touch interactive. Speed slider controls both sorting and graph animations.</small>
+  </footer>
+
+  <script src="{{ url_for('static', filename='script.js') }}"></script>
+  <script>
+if ("serviceWorker" in navigator) {
+  navigator.serviceWorker.register("{{ url_for('static', filename='service-worker.js') }}")
+    .then(() => console.log("Service Worker registered"));
+}
+</script>
+
+</body>
+</html>
